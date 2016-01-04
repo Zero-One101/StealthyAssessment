@@ -1,6 +1,7 @@
 // Copyright 1998-2015 Epic Games, Inc. All Rights Reserved.
 #pragma once
 #include "GameFramework/Character.h"
+#include "Engine/PointLight.h"
 #include "StealthyAssessmentCharacter.generated.h"
 
 UCLASS(config=Game)
@@ -55,7 +56,20 @@ protected:
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
-	// End of APawn interface
+
+    virtual void BeginPlay() override;
+
+    virtual void Tick(float DeltaSeconds) override;
+    // End of APawn interface
+
+private:
+    TArray<APointLight*> PointLights;
+
+    float MaxTraceTime = 0.5f;
+    float CurrentTraceTime = 0;
+
+    /* Traces from the player to each pointlight */
+    void PerformLightTraces();
 
 public:
 	/** Returns CameraBoom subobject **/

@@ -2,6 +2,8 @@
 
 #include "StealthyAssessment.h"
 #include "StealthyAssessmentCharacter.h"
+#include "EngineUtils.h"
+#include "Engine.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AStealthyAssessmentCharacter
@@ -39,6 +41,44 @@ AStealthyAssessmentCharacter::AStealthyAssessmentCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
+}
+
+void AStealthyAssessmentCharacter::BeginPlay()
+{
+    // Fetch all pointlights in the level and add them to the TArray
+    for (TActorIterator<APointLight> AItr(GetWorld()); AItr; ++AItr)
+    {
+        PointLights.Emplace(*AItr);
+    }
+}
+
+void AStealthyAssessmentCharacter::Tick(float DeltaSeconds)
+{
+    CurrentTraceTime += DeltaSeconds;
+    if (CurrentTraceTime >= MaxTraceTime)
+    {
+        PerformLightTraces();
+        CurrentTraceTime = 0;
+    }
+}
+
+void AStealthyAssessmentCharacter::PerformLightTraces()
+{
+    FCollisionQueryParams TraceParams = FCollisionQueryParams(false);
+    TraceParams.bTraceAsyncScene = true;
+    TraceParams.bReturnPhysicalMaterial = false;
+
+    FHitResult Hit(ForceInit);
+
+    auto Start = GetActorLocation();
+
+    for (auto& Light : PointLights)
+    {
+        auto End = Cast<APointLight>(Light)->GetActorLocation();
+
+        GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+        DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+    }
 }
 
 //////////////////////////////////////////////////////////////////////////
