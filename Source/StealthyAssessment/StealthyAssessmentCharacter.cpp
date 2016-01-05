@@ -45,40 +45,40 @@ AStealthyAssessmentCharacter::AStealthyAssessmentCharacter()
 
 void AStealthyAssessmentCharacter::BeginPlay()
 {
-    // Fetch all pointlights in the level and add them to the TArray
-    for (TActorIterator<APointLight> AItr(GetWorld()); AItr; ++AItr)
-    {
-        PointLights.Emplace(*AItr);
-    }
+	// Fetch all pointlights in the level and add them to the TArray
+	for (TActorIterator<APointLight> AItr(GetWorld()); AItr; ++AItr)
+	{
+		PointLights.Emplace(*AItr);
+	}
 }
 
 void AStealthyAssessmentCharacter::Tick(float DeltaSeconds)
 {
-    CurrentTraceTime += DeltaSeconds;
-    if (CurrentTraceTime >= MaxTraceTime)
-    {
-        PerformLightTraces();
-        CurrentTraceTime = 0;
-    }
+	CurrentTraceTime += DeltaSeconds;
+	if (CurrentTraceTime >= MaxTraceTime)
+	{
+		PerformLightTraces();
+		CurrentTraceTime = 0;
+	}
 }
 
 void AStealthyAssessmentCharacter::PerformLightTraces()
 {
-    FCollisionQueryParams TraceParams = FCollisionQueryParams(false);
-    TraceParams.bTraceAsyncScene = true;
-    TraceParams.bReturnPhysicalMaterial = false;
+	FCollisionQueryParams TraceParams = FCollisionQueryParams(false);
+	TraceParams.bTraceAsyncScene = true;
+	TraceParams.bReturnPhysicalMaterial = false;
 
-    FHitResult Hit(ForceInit);
+	FHitResult Hit(ForceInit);
 
-    auto Start = GetActorLocation();
+	auto Start = GetActorLocation();
 
-    for (auto& Light : PointLights)
-    {
-        auto End = Cast<APointLight>(Light)->GetActorLocation();
+	for (auto& Light : PointLights)
+	{
+		auto End = Cast<APointLight>(Light)->GetActorLocation();
 
-        GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
-        DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
-    }
+		GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
+		DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -153,12 +153,12 @@ void AStealthyAssessmentCharacter::MoveForward(float Value)
 
 void AStealthyAssessmentCharacter::MoveRight(float Value)
 {
-	if ( (Controller != NULL) && (Value != 0.0f) )
+	if ((Controller != NULL) && (Value != 0.0f))
 	{
 		// find out which way is right
 		const FRotator Rotation = Controller->GetControlRotation();
 		const FRotator YawRotation(0, Rotation.Yaw, 0);
-	
+
 		// get right vector 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		// add movement in that direction
