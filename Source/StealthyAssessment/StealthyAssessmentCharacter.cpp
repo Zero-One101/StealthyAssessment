@@ -77,7 +77,11 @@ void AStealthyAssessmentCharacter::PerformLightTraces()
 		auto End = Cast<APointLight>(Light)->GetActorLocation();
 
 		GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
-		DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+
+		if (!Hit.bBlockingHit)
+		{
+			DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+		}
 	}
 }
 
