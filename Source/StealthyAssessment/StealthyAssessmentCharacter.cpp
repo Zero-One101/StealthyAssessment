@@ -80,7 +80,7 @@ void AStealthyAssessmentCharacter::PerformLightTraces()
 
 		if (!Hit.bBlockingHit)
 		{
-			DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+			//DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
 		}
 	}
 }

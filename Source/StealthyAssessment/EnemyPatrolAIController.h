@@ -3,6 +3,7 @@
 #pragma once
 
 #include "AIController.h"
+#include "StealthyAssessmentCharacter.h"
 #include "EnemyPatrolAIController.generated.h"
 
 /**
@@ -16,6 +17,13 @@ class STEALTHYASSESSMENT_API AEnemyPatrolAIController : public AAIController
 		AEnemyPatrolAIController(const class FObjectInitializer& ObjectInitializer);
 
 protected:
+	virtual void BeginPlay() override;
+
 	virtual void Tick(float DeltaSeconds) override;
+
+	virtual void OnMoveCompleted(FAIRequestID RequestID, EPathFollowingResult::Type Result) override;
+
+private:
+	class AStealthyAssessmentCharacter* Player;
 	
 };
