@@ -2,7 +2,7 @@
 
 #include "StealthyAssessment.h"
 #include "EnemyPatrol.h"
-#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Components/SkeletalMeshComponent.h"
 #include "EnemyPatrolAIController.h"
 
 AEnemyPatrolAIController::AEnemyPatrolAIController(const class FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -33,6 +33,24 @@ void AEnemyPatrolAIController::Tick(float DeltaSeconds)
 
 void AEnemyPatrolAIController::OnMoveCompleted(FAIRequestID RequestID, EPathFollowingResult::Type Result)
 {
-	class AEnemyPatrol* owner = (AEnemyPatrol*)GetOwner();
-	TArray<UStaticMeshComponents*> Components;
+	AEnemyPatrol* owner = (AEnemyPatrol*)GetPawn();
+
+	TArray<USkeletalMeshComponent*> Components;
+
+	if (owner)
+	{
+		owner->GetComponents<USkeletalMeshComponent>(Components);
+
+		if (Components.Num() > 0)
+		{
+			USkeletalMeshComponent* bodyMeshComponent = Components[0];
+
+			if (bodyMeshComponent)
+			{
+				// Make AI ragdoll on collision
+				bodyMeshComponent->SetSimulatePhysics(true);
+				bodyMeshComponent->WakeAllRigidBodies();
+			}
+		}
+	}
 }
