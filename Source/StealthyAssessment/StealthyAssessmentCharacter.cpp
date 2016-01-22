@@ -76,11 +76,12 @@ void AStealthyAssessmentCharacter::PerformLightTraces()
 	{
 		auto End = Cast<APointLight>(Light)->GetActorLocation();
 
+		// Perform a line trace between the player and the current PointLight
 		GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, TraceParams);
 
 		if (!Hit.bBlockingHit)
 		{
-			//DrawDebugLine(GetWorld(), Start, End, FColor::Red, true, -1, 0, 1);
+			
 		}
 	}
 }

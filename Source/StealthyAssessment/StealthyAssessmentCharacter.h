@@ -63,12 +63,14 @@ protected:
 	// End of APawn interface
 
 private:
+
+	/** An array to contain the APointLight actors in the current level */
 	TArray<APointLight*> PointLights;
 
 	float MaxTraceTime = 0.5f;
 	float CurrentTraceTime = 0;
 
-	/* Traces from the player to each pointlight */
+	/** Traces from the player to each pointlight */
 	void PerformLightTraces();
 
 public:

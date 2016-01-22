@@ -24,6 +24,8 @@ protected:
 	virtual void OnMoveCompleted(FAIRequestID RequestID, EPathFollowingResult::Type Result) override;
 
 private:
+
+	/** The current player */
 	class AStealthyAssessmentCharacter* Player;
 	
 };

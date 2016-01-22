@@ -22,9 +22,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
 
+	/** Make the Actor rotate */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	class URotatingMovementComponent* Rotator;
 
+	/** Give the Actor a capsule for Collision */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Collision)
 	class UCapsuleComponent* Collision;
 

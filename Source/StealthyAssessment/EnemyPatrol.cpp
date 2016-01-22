@@ -11,6 +11,8 @@ AEnemyPatrol::AEnemyPatrol()
 	PrimaryActorTick.bCanEverTick = true;
 
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+
+	// Allows the EnemyPatrolAIController to turn the Character
 	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 
 }
