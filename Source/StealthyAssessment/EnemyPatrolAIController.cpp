@@ -23,6 +23,8 @@ void AEnemyPatrolAIController::BeginPlay()
 		// Make the owning actor move towards the player
 		MoveToActor(Player);
 	}
+
+    Super::BeginPlay();
 }
 
 void AEnemyPatrolAIController::Tick(float DeltaSeconds)

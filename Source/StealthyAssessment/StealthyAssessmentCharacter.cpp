@@ -50,6 +50,8 @@ void AStealthyAssessmentCharacter::BeginPlay()
 	{
 		PointLights.Emplace(*AItr);
 	}
+
+    Super::BeginPlay();
 }
 
 void AStealthyAssessmentCharacter::Tick(float DeltaSeconds)
